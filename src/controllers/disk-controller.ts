@@ -2,6 +2,11 @@ import { Request, Response } from "express";
 import { formatBytes } from "../utils/formatters";
 import { getDiskInfo } from "../services/disk-services";
 
+/**
+ * @description Retrieves disk partition status and formats byte values to readable sizes (MB/GB).
+ * @param req - Express request object
+ * @param res - Express response object
+ */
 export const getDiskController = async (req: Request, res: Response) => {
   const diskData = await getDiskInfo();
 

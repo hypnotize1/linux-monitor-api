@@ -9,32 +9,31 @@ import http from "http";
 import { Server } from "socket.io";
 import { initStatsSocket } from "./sockets/stats-socket";
 
+/**
+ * @description Main application configuration and server initialization.
+ * Integrates Express for RESTful APIs and Socket.IO for real-time WebSocket communication.
+ */
 const app: Application = express();
 const server = http.createServer(app);
 const io = new Server(server, { cors: { origin: "*" } });
 
+// Initialize WebSocket connections and events
 initStatsSocket(io);
 
 const PORT = 3000;
 
+// Middleware to parse incoming JSON requests
 app.use(express.json());
 
+// Register REST API routes for system monitoring
 app.use("/api/v1/sys/os", osRouter);
 app.use("/api/v1/sys/memory", memoryRouter);
 app.use("/api/v1/sys/cpu", cpuRouter);
 app.use("/api/v1/sys/disk", diskRouter);
 app.use("/api/v1/sys/processes", processRouter);
 
+// Global error handling middleware
 app.use(globalErrorHandler);
 
-// app.get("/api/v1/health", (req: Request, res: Response) => {
-//   res.status(200).json({
-//     status: "success",
-//     message: "Linux Monitor API is running!",
-//   });
-// });
-
-server.listen(3000, () => console.log("Server running on port 3000"));
-// app.listen(PORT, () => {
-//   console.log(`Server is listening on port ${PORT}...`);
-// });
+// Start the integrated HTTP and WebSocket server
+server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
