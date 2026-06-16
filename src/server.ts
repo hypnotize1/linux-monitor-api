@@ -1,7 +1,8 @@
 import express, { Application, Request, Response } from "express";
+import { globalErrorHandler } from "./middlewares/errorHandler";
 import osRouter from "./routes/os-routes";
 import memoryRouter from "./routes/memory-routes";
-import { globalErrorHandler } from "./middlewares/errorHandler";
+import cpuRouter from "./routes/cpu-routes";
 
 const app: Application = express();
 const PORT = 3000;
@@ -10,6 +11,7 @@ app.use(express.json());
 
 app.use("/api/v1/sys/os", osRouter);
 app.use("/api/v1/sys/memory", memoryRouter);
+app.use("/api/v1/sys/cpu", cpuRouter);
 
 app.use(globalErrorHandler);
 

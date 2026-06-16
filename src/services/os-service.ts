@@ -1,10 +1,10 @@
 import si from "systeminformation";
+import { AppError } from "../utils/appError";
 
 export const getOsInfo = async () => {
   try {
-    const osData = await si.osInfo();
-    return osData;
-  } catch (err) {
-    throw new Error("Failed to fetch OS information from the system!");
+    return await si.osInfo();
+  } catch (error) {
+    throw new AppError("Failed to fetch OS data from the system kernel", 500);
   }
 };
