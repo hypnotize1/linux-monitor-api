@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { getOsInfo } from "../services/OS-service";
+import { getOsInfo } from "../services/os-service";
 
 export const getOsController = async (req: Request, res: Response) => {
   const osData = await getOsInfo();
